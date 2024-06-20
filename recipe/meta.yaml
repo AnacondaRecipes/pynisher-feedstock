@@ -1,38 +1,50 @@
 {% set name = "pynisher" %}
-{% set version = "1.0.10" %}
-
+{% set version = "0.6.4" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2722b795d22129ddd5247038bba727ae06ecdb3a5942070817be7c8d4a680e31
+  url: https://github.com/automl/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 9b36cb0598d527b074456d02385a336ec40aeb0047dd68894b169c2a6a97304c
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: True  # [py<37]
 
 requirements:
   host:
     - pip
-    - python >=3.7
+    - python
+    - setuptools
+    - wheel
   run:
     - psutil
-    - python >=3.7
+    - python
     - typing_extensions
-    - pywin32-on-windows
-    # allows us to stay noarch
 
 test:
+  source_files:
+    - test
   imports:
     - pynisher
   commands:
     - pip check
+    - pytest -v . -k "not (test_num_processes or test_out_of_memory or test_kill_subprocesses)"
+    #- pytest -v . -k " not (test_num_processes or test_kill_subprocesses)"
   requires:
     - pip
+    - pytest
+    - pytest-cov
+    - pytest-forked
+    - pydocstyle
+    - isort
+    - black
+    - flake8
+    - mypy
+    - scikit-learn
 
 about:
   home: https://github.com/automl/pynisher
@@ -42,8 +54,10 @@ about:
     and executes the function inside it. In the end, it returns the function return value. If, for any reason,
     the function call is not successful, None is returned.
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   dev_url: https://github.com/automl/pynisher
+  doc_url: https://github.com/automl/pynisher/blob/main/README.md
 
 extra:
   recipe-maintainers:
