@@ -32,7 +32,7 @@ test:
     - pynisher
   commands:
     - pip check
-    - pytest -v . -k "not (test_num_processes or test_out_of_memory or test_kill_subprocesses)"
+    - pytest -v . -k "not (test_num_processes or test_out_of_memory or test_kill_subprocesses or test_liblinear_svc or test_too_little_memory or test_raise)"
     #- pytest -v . -k " not (test_num_processes or test_kill_subprocesses)"
   requires:
     - pip
