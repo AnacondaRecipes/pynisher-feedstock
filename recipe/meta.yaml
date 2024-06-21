@@ -32,8 +32,9 @@ test:
     - pynisher
   commands:
     - pip check
-    - pytest -v . -k " not (est_num_processes or test_out_of_memory or test_kill_subprocesses or test_liblinear_svc or test_too_little_memory)" # [linux]
-    - pytest -v . -k " not (test_liblinear_svc or test_out_of_memory or test_raise or test_too_little_memory or test_kill_subprocesses)" # [osx]
+    # add test to skip jinja variable. have lines that are only selected for which platform it's running.
+    - pytest -v . -k " not (test_num_processes or test_out_of_memory or test_kill_subprocesses or test_liblinear_svc or test_too_little_memory)" # [linux]
+    - pytest -v . -k " not (test_liblinear_svc or test_out_of_memory or test_raise or test_too_little_memory or test_kill_subprocesses or test_busy_in_C_library)" # [osx]
   requires:
     - pip
     - pytest
