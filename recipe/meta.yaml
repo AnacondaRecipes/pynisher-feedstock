@@ -12,7 +12,9 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<37]
+  # version 0.6.4 is very old and does not support Windows
+  # (introduced in version 1.0.0)
+  skip: True  # [py<37 or win]
 
 requirements:
   host:
