@@ -25,7 +25,6 @@ requirements:
   run:
     - psutil
     - python
-    - typing_extensions
 
 # skipping some tests that seem to play with timeouts and number of process and
 # they fail, not sure why, but they seem not failing for a packaging reason.
