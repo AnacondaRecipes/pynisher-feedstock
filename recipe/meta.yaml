@@ -24,6 +24,7 @@ requirements:
     - psutil
     - python
     - typing_extensions
+    - pywin32  # [win]
 
 test:
   source_files:
